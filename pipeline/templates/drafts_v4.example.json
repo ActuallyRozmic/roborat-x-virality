@@ -1,0 +1,7 @@
+{
+  "_comment": "Example only. digests/<D>/_parts/drafts_v4.json has exactly one entry per TOP-10 post id printed by `drafts.py top10 <D>`. Remove this key in the real file.",
+  "1234567890123456789": {
+    "draft_en": "Most people still set up coding agents like a chatbot. The ones getting results treat Claude Code like a teammate with a checklist - same repo, same rules file, short tasks. Copy the setup below.",
+    "keywords_used": ["Claude Code", "coding agents"]
+  }
+}

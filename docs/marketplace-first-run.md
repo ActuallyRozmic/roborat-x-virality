@@ -80,6 +80,23 @@ Accounts may also be `{"handle","notes"}` objects. Strip `@` if they included it
 
 ---
 
+## Stage 3b — Optional trend layer settings
+
+**What happens.** The daily trend layer (`pipeline/`) works with defaults. A few choices make it theirs.
+
+**What the user does.** Answers, or says "defaults":
+
+1. Any big account (an aggregator) to use as **trend input only**? Its posts feed trend keywords and the radar, never hits, leaderboards or drafts. → `trend_input_only`
+2. ~16 niche keywords for the **X keyword table** (24h vs previous 24h, sampled search). → `x_keywords.core` (default: the AI list in the example)
+3. Labels and ping in English or Russian? → `lang` (`en` default)
+4. Run the **experiment** on their own posts (trend vs non-trend, same-format comparison, vs their pre-window median)? Needs start / end dates and their numeric user id (look it up once, read-only, with `get_users_by_usernames`). → `experiment` (off by default)
+
+**What you do.** Write those keys into `config/watchlist.json`. Do not invent keywords they did not approve beyond the example defaults.
+
+**Result to expect.** A recap of the four choices. The first daily run uses them.
+
+---
+
 ## Stage 4 — Publish their Pages URL
 
 **What happens.** Their board becomes a public GitHub Pages site they own.
@@ -112,7 +129,7 @@ If Pages is still building, the result to wait for is that same URL returning th
 
 **What the user does.** Keep a logged-in X session on the scraping machine for read-only browsing. Each day, pick 1–2 drafts and post them themselves.
 
-**What you do.** On every digest: regenerate **their** `board/data.json`, run `board/enrich_leaderboards.py` when they want week/month updated, and push `data.json` to **their** Pages repo. Read [daily-loop.md](daily-loop.md).
+**What you do.** On every digest: regenerate **their** `board/data.json`, run `board/enrich_leaderboards.py` when they want week/month updated, run `pipeline/run_day.sh prepare <D>` → read-only searches → TOP-10 drafts + ideas → `pipeline/run_day.sh <D>`, send the ping from `digests/<D>/PING.txt`, and push `data.json` to **their** Pages repo. Read [daily-loop.md](daily-loop.md) and [pipeline.md](pipeline.md).
 
 Hard stop: never like, reply, repost, follow, DM, delete, or post without a fresh yes for that exact action. Never commit cookies, sessions, or API keys.
 

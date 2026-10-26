@@ -6,6 +6,8 @@ https://monkeyteamvip.github.io/kiosa-board/ is a case-study demo you can open t
 
 Schema for the JSON the page reads: `board/data.example.json` (same fields the UI uses: `brand_title`, `brand_handle`, `operator`, `ui.default_theme`, `leaderboards`, `hits`, `day_roster`, `you_rank`, and the rest of that file).
 
+Sections added by the trend pipeline (`pipeline/`, see `docs/pipeline.md`) appear only when their data exists: TOP-10 badges + drafts with keyword chips and overlap (`top10_rank`, `draft_en`, `draft_keywords`, `draft_check`, `original_en`), self-quote badge (`self_quote`, `self_quote_label`), why-it-hit line (`why_hit`), **07b Trend keywords** (`trend_keywords`), **08b Trends and post ideas** (`trend_radar`, incl. the X keyword table) and **08c Experiment** (`experiment`).
+
 ---
 
 ## 1. Brand and watchlist

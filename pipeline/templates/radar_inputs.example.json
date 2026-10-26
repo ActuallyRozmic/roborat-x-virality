@@ -1,0 +1,31 @@
+{
+  "_comment": "Example only. The agent writes digests/<D>/_parts/radar_inputs.json every day from that day's trend_keywords.json and X keyword table. Keywords must exist in those lists and appear in hook_en or angle. 5-8 ideas, every idea has a visual (no text-only posts); 2-3 article ideas. No invented facts: 'why' cites real board posts / views.",
+  "topics": [
+    {"name": "Coding agents", "keywords": ["Claude Code", "Codex", "AI agents"]},
+    {"name": "AI security", "keywords": ["prompt injection", "security"]}
+  ],
+  "ideas": [
+    {
+      "title": "One prompt-injection test you can run in 60 seconds",
+      "topic": "AI security",
+      "keywords": ["prompt injection"],
+      "format": "screencast",
+      "visual_type": "screencast",
+      "visual": "Screen recording: paste a poisoned README into your agent, show it trying to follow the hidden line, then show the fix.",
+      "angle": "Practical prompt injection check for anyone running agents on their own repos.",
+      "hook_en": "Your agent reads every README you clone. Here is a 60 second prompt injection test before it reads the wrong one.",
+      "why": "Two board hits on agent security cleared the floor yesterday (see why-it-hit)."
+    }
+  ],
+  "articles": [
+    {
+      "title": "What actually changed for coding agents this week",
+      "thesis": "The biggest wins came from boring setup, not new models.",
+      "outline": ["What shipped", "What people actually used", "Setups that held up", "What to try tomorrow"],
+      "keywords": ["Claude Code", "Codex"],
+      "visual": "Cover: side-by-side terminal screenshots; inline: one diagram of the setup.",
+      "why": "Both keywords sit in the top of the X keyword table for the last 24 h."
+    }
+  ],
+  "takeaway": ""
+}

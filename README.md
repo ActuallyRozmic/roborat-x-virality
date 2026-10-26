@@ -8,12 +8,16 @@ You pick the accounts. The desk reads original posts that already cleared your v
 
 Each day it can:
 
-1. Scan **your** watchlist (Profiles → original posts).
+1. Scan **your** watchlist (Profiles → original posts). Self-quotes count like any original and only get a self-quote badge.
 2. Keep posts at or above `min_views`, and mark ★ posts at or above `star_views`.
-3. Run a **keyword / pattern** pass on those hits and on ~20 outsider AI posts from the last ~48 hours.
-4. Write a full English draft **from that pattern brief**, plus a `video_tip`.
-5. Deliver a digest you can open before noon in your timezone.
-6. Refresh **your** GitHub Pages board: X Score, Day Target (DONE / NOT DONE), per-hit chips, Night/Day themes, and charts.
+3. Run a **keyword / pattern** pass on those hits and on ~20 outsider AI posts from the last ~48 hours, and rank the **last-24h trend keywords**.
+4. Write **Draft rules v4** drafts for the **TOP-10** most-viewed board posts only: genuine rewrites (same facts, no new numbers, short hyphen only, standalone posts, never replies) with trend keywords woven in by meaning. A code gate rejects >30% 4-gram overlap or a copied run of 7+ words.
+5. Build **Trends and post ideas**: trend radar 24h / 48h, a trend-match % and "why it hit" verdict per post (trend / visual / author-audience / coincidence), trend vs non-trend views from real board numbers, the line "TOP-10: x/10 (y%) matched trends", 5-8 post ideas (topic + hook + visual + keywords, never text-only) and 2-3 article ideas.
+6. Fill an **X keyword table**: ~16 niche keywords, views across X in the last 24h vs the previous 24h via read-only search (a sample of up to 25 posts per search, labelled as a sample).
+7. Optionally run an **experiment tracker** on your own posts in a time window: trend (≥35% match) vs non-trend, compared inside the same format, against your pre-window median.
+8. Treat big aggregator accounts as **trend input only** if you list them: their posts feed the keywords and the radar, never the hits, leaderboards or drafts.
+9. Deliver a digest and a one-paragraph ping you can open before noon in your timezone.
+10. Refresh **your** GitHub Pages board: X Score, Day Target (DONE / NOT DONE), per-hit chips, Night/Day themes, charts, TOP-10 badges, trend keywords, trend radar and the experiment.
 
 ## What you provide
 
@@ -32,7 +36,7 @@ cp config/watchlist.example.json config/watchlist.json
 cp board/data.example.json board/data.json
 ```
 
-`config/watchlist.json`, `board/data.json`, and `board/leaderboard_ledger.json` are gitignored so a later pull does not overwrite them.
+`config/watchlist.json`, `board/data.json`, `board/leaderboard_ledger.json`, and `digests/` are gitignored so a later pull does not overwrite them.
 
 ## What you should end up with
 
@@ -61,14 +65,15 @@ Marketplace bots should follow [docs/marketplace-first-run.md](docs/marketplace-
 ## Daily loop (short)
 
 1. Optional morning culture check.
-2. Read-only watchlist scrape of original posts.
-3. Keyword / pattern pass, including ~20 outsiders from the last ~48 hours.
-4. English drafts + `video_tip` written from those patterns.
-5. Digest by 12:00 in your configured timezone.
-6. You edit and publish 1–2 posts yourself.
-7. Refresh `board/data.json` and push it to **your** Pages repo.
+2. Read-only collection of day D: watchlist originals, outsiders, last-24h timelines.
+3. Build `board/data.json`, then `pipeline/run_day.sh prepare <D>` (trend keywords, X keyword searches to run, TOP-10 list).
+4. Read-only X keyword searches (+ the experiment timeline if enabled).
+5. Agent writes TOP-10 drafts (`templates/DRAFT_RULES.md`) and post / article ideas.
+6. `pipeline/run_day.sh <D>`: gates, trend radar, experiment, `PING.txt`.
+7. Digest + ping by 12:00 in your configured timezone. You edit and publish 1–2 posts yourself.
+8. Push `board/data.json` + `index.html` to **your** Pages repo.
 
-Full timing: [docs/daily-loop.md](docs/daily-loop.md).
+Full timing: [docs/daily-loop.md](docs/daily-loop.md). Scripts and fields: [docs/pipeline.md](docs/pipeline.md).
 
 ## Config
 
@@ -78,6 +83,11 @@ Full timing: [docs/daily-loop.md](docs/daily-loop.md).
 - `min_views` — floor for a hit (example: `5000`)
 - `star_views` — highlight threshold (example: `10000`)
 - `accounts` — handles **without** `@`. A string, or `{"handle","notes"}`, both work.
+- `trend_input_only` — handles used only as trend signals (e.g. a big aggregator). Optional.
+- `lang` — `en` or `ru` for verdict labels and the ping.
+- `x_keywords.core` — ~16 keywords of your niche for the X keyword table.
+- `experiment` — optional trend vs non-trend tracker of **your** posts: `enabled`, `handle`, `user_id`, `start`, `end`, `baseline_days`, `trend_threshold`.
+- `board_url` — your Pages URL, printed in the ping.
 
 Anyone can fork this and track a different niche (AI tools, design, local news). The scout logic stays the same.
 
@@ -97,7 +107,10 @@ board/data.example.json        # schema the UI expects
 board/enrich_leaderboards.py   # week/month ledger (uses your operator)
 board/publish-pages.example.sh # publish helper (no secrets inside)
 board/SETUP.md                 # Pages + targets + themes
-templates/                     # digest shape + draft rules
+pipeline/                      # trend layer: drafts v4 gate, trend radar, X keyword table, experiment, ping
+pipeline/templates/            # radar_inputs + drafts_v4 examples
+docs/pipeline.md               # scripts, config keys, scoring
+templates/                     # digest + ping shape, Draft rules v4
 examples/                      # redacted sample digest
 assets/                        # screenshots for the article
 ```

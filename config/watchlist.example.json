@@ -2,9 +2,58 @@
   "timezone": "Europe/Moscow",
   "min_views": 5000,
   "star_views": 10000,
+  "lang": "en",
   "accounts": [
     "example_account",
     "another_handle"
   ],
-  "_comment": "Copy this file to config/watchlist.json (gitignored). Replace the placeholders with handles you track, without @. Optional object form also works: {\"handle\": \"example_account\", \"notes\": \"why you watch them\"}."
+  "trend_input_only": [
+    "example_aggregator"
+  ],
+  "keyword_domain_terms": [
+    "agent",
+    "agents",
+    "skills",
+    "memory",
+    "workflow"
+  ],
+  "x_keywords": {
+    "max": 16,
+    "core": [
+      "AI agents",
+      "Claude Code",
+      "ChatGPT",
+      "OpenAI",
+      "Anthropic",
+      "Gemini",
+      "Grok",
+      "MCP",
+      "Codex",
+      "vibe coding",
+      "open source",
+      "prompt injection",
+      "AI video",
+      "LLM",
+      "Cursor",
+      "second brain"
+    ],
+    "query_override": {
+      "MCP": "(MCP OR \"MCP server\") (AI OR agent OR server)",
+      "Codex": "(Codex OR \"OpenAI Codex\") (OpenAI OR coding OR agent)"
+    }
+  },
+  "experiment": {
+    "enabled": false,
+    "handle": "your_handle",
+    "user_id": "",
+    "start": "2026-11-01",
+    "end": "2026-11-07",
+    "baseline_days": 30,
+    "trend_threshold": 35,
+    "min_n": 5,
+    "min_age_h": 24,
+    "hypothesis": "Trend posts beat non-trend posts of the same format"
+  },
+  "board_url": "https://<your-github-user>.github.io/<your-board-repo>/",
+  "_comment": "Copy this file to config/watchlist.json (gitignored). Replace the placeholders with handles you track, without @. Optional object form also works: {\"handle\": \"example_account\", \"notes\": \"why you watch them\"}. trend_input_only = accounts (e.g. a big aggregator) whose posts are fetched and used ONLY as trend signals: never shown as hits, outsiders, leaderboard rows or drafts. lang = en|ru for board/ping labels. experiment = optional trend vs non-trend tracker of YOUR own posts (fill handle + numeric user_id, set enabled true). x_keywords.core = ~16 niche keywords for the X keyword table (24h vs previous 24h, sampled search)."
 }

@@ -11,6 +11,8 @@ personal operator handle or a private digest path.
 - Does NOT double-count: re-running overwrites that day's ledger slice
 - Only patches leaderboards (+ updated); leaves day_roster / hits / etc. intact
 - Does not invent historical "you" views when a day's scrape is missing
+- Skips accounts listed in watchlist "trend_input_only" (trend signals only)
+- Self-quotes count like any other original (they only carry a badge)
 
 Paths:
   XVS_DATA           default: <this dir>/data.json
@@ -59,11 +61,13 @@ THRESHOLD = 5000
 TRACKING_START = ""
 TZ_NAME = "UTC"
 MSK = timezone.utc
+# Accounts used only as trend input (config "trend_input_only"): never ranked on leaderboards.
+TREND_INPUT_ONLY: set[str] = set()
 
 
 def configure() -> None:
     """Load operator, floors, and timezone from the importer's own files."""
-    global YOU, YOU_HANDLE, YOU_NAME, THRESHOLD, TRACKING_START, TZ_NAME, MSK
+    global YOU, YOU_HANDLE, YOU_NAME, THRESHOLD, TRACKING_START, TZ_NAME, MSK, TREND_INPUT_ONLY
 
     watchlist: dict = {}
     if WATCHLIST_PATH.exists():
@@ -72,6 +76,11 @@ def configure() -> None:
     data: dict = {}
     if DASH.exists():
         data = json.loads(DASH.read_text())
+
+    TREND_INPUT_ONLY = {
+        canon_key(str(a.get("handle") if isinstance(a, dict) else a))
+        for a in (watchlist.get("trend_input_only") or [])
+    }
 
     op = data.get("operator") or {}
     handle = (
@@ -208,7 +217,7 @@ def build_day_slice(day: str) -> dict[str, dict]:
 
     for h in load_day_hits(day):
         key = canon_key(h.get("handle") or "")
-        if not key or key == YOU:
+        if not key or key == YOU or key in TREND_INPUT_ONLY:
             continue
         views = int(h.get("views") or 0)
         if views < THRESHOLD:
@@ -357,6 +366,8 @@ def aggregate(ledger: dict, days: list[str]) -> list[dict]:
         slice_ = day_map.get(day) or {}
         accounts = slice_.get("accounts") or {}
         for key, row in accounts.items():
+            if key in TREND_INPUT_ONLY:
+                continue
             hits = int(row.get("hits") or 0)
             total = int(row.get("total") or 0)
             best = int(row.get("best") or 0)

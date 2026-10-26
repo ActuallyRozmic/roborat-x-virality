@@ -13,3 +13,6 @@ __pycache__/
 *.cookies
 cookies.txt
 *session*.json
+
+# Daily run data (raw X fetches, drafts, experiment history). Personal, keep local.
+digests/

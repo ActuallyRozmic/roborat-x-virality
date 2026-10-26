@@ -78,7 +78,13 @@
     "day_compare_chart": true,
     "week_strip": true,
     "no_hits_reasons": true,
-    "marker_class": "xvs-dash-2026"
+    "marker_class": "xvs-dash-2026",
+    "top10_drafts_v4": true,
+    "trend_keywords": true,
+    "trend_radar": true,
+    "x_keyword_table": true,
+    "experiment": true,
+    "self_quote_badge": true
   },
   "operator": {
     "handle": "@your_handle",
@@ -89,5 +95,6 @@
     "default_theme": "night"
   },
   "day_roster": [],
-  "you_rank": null
+  "you_rank": null,
+  "trend_input_only_posts": []
 }
