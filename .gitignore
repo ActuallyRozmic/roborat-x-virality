@@ -19,3 +19,7 @@ digests/
 
 # Local sample-day preview written by scripts/smoke_day.sh
 board/.smoke-preview/
+
+# Private RoboRat operator overlays
+ROBORAT-OPERATOR.md
+OPERATOR_BOARD_URL.txt
